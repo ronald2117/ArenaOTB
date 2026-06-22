@@ -1,0 +1,21 @@
+using Microsoft.EntityFrameworkCore;
+using ArenaOtbApi.Models;
+
+namespace ArenaOtbApi.Data;
+
+public class ApplicationDbContext : DbContext
+{
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+
+    public DbSet<User> Users { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<User>()
+            .HasIndex(u => u.Email)
+            .IsUnique()
+            .HasFilter("[Email] IS NOT NULL");
+    }
+}

@@ -1,1 +1,159 @@
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "Outfit", sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+
+  --color-gaming-bg-dark: #0a0e17;
+  --color-gaming-panel-dark: rgba(18, 24, 36, 0.85);
+  --color-gaming-border-dark: #1e293b;
+
+  --color-gaming-bg-light: #f8fafc;
+  --color-gaming-panel-light: rgba(255, 255, 255, 0.9);
+  --color-gaming-border-light: #e2e8f0;
+
+  --color-gold-glow: #fbbf24;
+  --color-cyan-glow: #06b6d4;
+  --color-emerald-glow: #10b981;
+  --color-crimson-glow: #ef4444;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Global Base Styles */
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-gaming-bg-light);
+  color: #0f172a;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.dark body {
+  background-color: var(--color-gaming-bg-dark);
+  color: #f8fafc;
+}
+
+/* Background Cyber Grid Pattern */
+.bg-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(148, 163, 184, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+}
+
+.dark .bg-grid {
+  background-image: 
+    linear-gradient(to right, rgba(6, 182, 212, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
+}
+
+/* Custom Glow Effects */
+.glow-cyan {
+  box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+}
+.glow-gold {
+  box-shadow: 0 0 15px rgba(251, 191, 36, 0.4);
+}
+.glow-emerald {
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+}
+.glow-crimson {
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+}
+
+/* Text Glows */
+.text-glow-cyan {
+  text-shadow: 0 0 8px rgba(6, 182, 212, 0.6);
+}
+.text-glow-gold {
+  text-shadow: 0 0 8px rgba(251, 191, 36, 0.6);
+}
+
+/* Glassmorphism Styles */
+.glass-panel {
+  background: var(--color-gaming-panel-light);
+  border: 1px solid var(--color-gaming-border-light);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.dark .glass-panel {
+  background: var(--color-gaming-panel-dark);
+  border: 1px solid var(--color-gaming-border-dark);
+}
+
+/* Custom Chessboard pattern for decorative elements */
+.bg-chessboard {
+  background-color: #f1f5f9;
+  background-image: 
+    linear-gradient(45deg, #e2e8f0 25%, transparent 25%, transparent 75%, #e2e8f0 75%, #e2e8f0),
+    linear-gradient(45deg, #e2e8f0 25%, transparent 25%, transparent 75%, #e2e8f0 75%, #e2e8f0);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+}
+
+.dark .bg-chessboard {
+  background-color: #0f172a;
+  background-image: 
+    linear-gradient(45deg, #1e293b 25%, transparent 25%, transparent 75%, #1e293b 75%, #1e293b),
+    linear-gradient(45deg, #1e293b 25%, transparent 25%, transparent 75%, #1e293b 75%, #1e293b);
+}
+
+/* Custom Animations */
+@keyframes radar-sweep {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-radar {
+  animation: radar-sweep 4s linear infinite;
+}
+
+@keyframes scan-line {
+  0% {
+    top: 0%;
+  }
+  50% {
+    top: 100%;
+  }
+  100% {
+    top: 0%;
+  }
+}
+
+.animate-scan-line {
+  animation: scan-line 3s ease-in-out infinite;
+}
+
+/* Premium Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
