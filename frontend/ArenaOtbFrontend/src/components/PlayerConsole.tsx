@@ -287,21 +287,21 @@ export const PlayerConsole: React.FC<PlayerConsoleProps> = ({
                 {/* White Clock */}
                 <div
                   onClick={() => handleClockTap("White")}
-                  className={`cursor-pointer select-none py-10 px-4 rounded-2xl text-center border-2 transition-all ${
+                  className={`cursor-pointer select-none py-6 sm:py-10 px-2 sm:px-4 rounded-2xl text-center border-2 transition-all ${
                     activeClock === "White"
                       ? "border-cyan-500 bg-cyan-500/5 glow-cyan scale-[1.02]"
                       : "border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-950 opacity-60"
                   }`}
                 >
-                  <span className="text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 block mb-2">
+                  <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 block mb-2">
                     White ({playerState.color === "White" ? "You" : playerState.opponentName})
                   </span>
-                  <span className="font-display text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+                  <span className="font-display text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">
                     {formatClockTime(whiteTime)}
                   </span>
                   {activeClock === "White" && (
-                    <span className="block mt-2 text-[10px] font-bold uppercase text-cyan-600 dark:text-cyan-400 animate-pulse tracking-widest">
-                      TAP TO PASS TURN
+                    <span className="block mt-2 text-[9px] sm:text-[10px] font-bold uppercase text-cyan-600 dark:text-cyan-400 animate-pulse tracking-widest">
+                      TAP TO PASS
                     </span>
                   )}
                 </div>
@@ -309,21 +309,21 @@ export const PlayerConsole: React.FC<PlayerConsoleProps> = ({
                 {/* Black Clock */}
                 <div
                   onClick={() => handleClockTap("Black")}
-                  className={`cursor-pointer select-none py-10 px-4 rounded-2xl text-center border-2 transition-all ${
+                  className={`cursor-pointer select-none py-6 sm:py-10 px-2 sm:px-4 rounded-2xl text-center border-2 transition-all ${
                     activeClock === "Black"
                       ? "border-cyan-500 bg-cyan-500/5 glow-cyan scale-[1.02]"
                       : "border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-950 opacity-60"
                   }`}
                 >
-                  <span className="text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 block mb-2">
+                  <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 block mb-2">
                     Black ({playerState.color === "Black" ? "You" : playerState.opponentName})
                   </span>
-                  <span className="font-display text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+                  <span className="font-display text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">
                     {formatClockTime(blackTime)}
                   </span>
                   {activeClock === "Black" && (
-                    <span className="block mt-2 text-[10px] font-bold uppercase text-cyan-600 dark:text-cyan-400 animate-pulse tracking-widest">
-                      TAP TO PASS TURN
+                    <span className="block mt-2 text-[9px] sm:text-[10px] font-bold uppercase text-cyan-600 dark:text-cyan-400 animate-pulse tracking-widest">
+                      TAP TO PASS
                     </span>
                   )}
                 </div>

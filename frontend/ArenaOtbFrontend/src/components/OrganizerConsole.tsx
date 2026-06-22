@@ -175,16 +175,16 @@ export const OrganizerConsole: React.FC<OrganizerConsoleProps> = ({
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-3 shrink-0">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3 shrink-0 w-full lg:w-auto mt-4 lg:mt-0">
           <button
             onClick={onBackToHome}
-            className="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-500 hover:text-slate-800 dark:border-slate-800 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-950 font-bold uppercase tracking-wider text-xs transition-colors"
+            className="px-3 py-1.5 sm:px-5 sm:py-2.5 rounded-xl border border-slate-200 text-slate-500 hover:text-slate-800 dark:border-slate-800 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-950 font-bold uppercase tracking-wider text-[10px] sm:text-xs transition-colors flex-1 sm:flex-initial text-center justify-center"
           >
-            ← Back to Home
+            ← Back
           </button>
           <button
             onClick={onToggleArenaActive}
-            className={`flex items-center gap-1.5 px-5 py-2.5 rounded-xl font-bold uppercase tracking-wider text-xs shadow-md transition-all ${
+            className={`flex items-center justify-center gap-1.5 px-3 py-1.5 sm:px-5 sm:py-2.5 rounded-xl font-bold uppercase tracking-wider text-[10px] sm:text-xs shadow-md transition-all flex-1 sm:flex-initial ${
               arenaActive
                 ? "bg-amber-600 text-white hover:bg-amber-500"
                 : "bg-emerald-600 text-white hover:bg-emerald-500"
@@ -192,21 +192,21 @@ export const OrganizerConsole: React.FC<OrganizerConsoleProps> = ({
           >
             {arenaActive ? (
               <>
-                <Pause className="h-4 w-4" />
-                <span>Pause Matchmaking</span>
+                <Pause className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                <span>Pause</span>
               </>
             ) : (
               <>
-                <Play className="h-4 w-4 fill-current" />
-                <span>Resume Matchmaking</span>
+                <Play className="h-3.5 w-3.5 sm:h-4 sm:w-4 fill-current" />
+                <span>Resume</span>
               </>
             )}
           </button>
           <button
             onClick={onEndArena}
-            className="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-500 hover:text-red-500 dark:border-slate-800 dark:text-slate-400 hover:bg-red-500/5 dark:hover:bg-red-950/15 font-bold uppercase tracking-wider text-xs transition-colors"
+            className="px-3 py-1.5 sm:px-5 sm:py-2.5 rounded-xl border border-slate-200 text-slate-500 hover:text-red-500 dark:border-slate-800 dark:text-slate-400 hover:bg-red-500/5 dark:hover:bg-red-950/15 font-bold uppercase tracking-wider text-[10px] sm:text-xs transition-colors flex-1 sm:flex-initial text-center justify-center"
           >
-            End Session
+            End Arena
           </button>
         </div>
       </div>
