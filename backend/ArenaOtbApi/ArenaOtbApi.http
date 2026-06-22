@@ -1,0 +1,6 @@
+@ArenaOtbApi_HostAddress = http://localhost:5195
+
+GET {{ArenaOtbApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
