@@ -14,10 +14,10 @@ namespace ArenaOtbApi.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
-    private readonly TokenService _tokenService;
+    private readonly ITokenService _tokenService;
     private readonly IConfiguration _config;
 
-    public AuthController(ApplicationDbContext context, TokenService tokenService, IConfiguration config)
+    public AuthController(ApplicationDbContext context, ITokenService tokenService, IConfiguration config)
     {
         _context = context;
         _tokenService = tokenService;

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using ArenaOtbApi.Data;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using ArenaOtbApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
