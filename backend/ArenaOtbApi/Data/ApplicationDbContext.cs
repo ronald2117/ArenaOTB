@@ -32,6 +32,10 @@ public class ApplicationDbContext : DbContext
             .IsUnique();
 
         modelBuilder.Entity<Arena>()
+            .Property(x => x.Status)
+            .HasConversion<string>();
+
+        modelBuilder.Entity<Arena>()
             .HasOne(a => a.Organizer)
             .WithMany(u => u.OrganizedArenas)
             .HasForeignKey(a => a.OrganizerId)
@@ -43,6 +47,10 @@ public class ApplicationDbContext : DbContext
             .WithMany(a => a.Players)
             .HasForeignKey(ap => ap.ArenaId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<ArenaPlayer>()
+            .Property(x => x.Status)
+            .HasConversion<string>();
 
         modelBuilder.Entity<ArenaPlayer>()
             .HasOne(ap => ap.CurrentMatch)
@@ -58,6 +66,10 @@ public class ApplicationDbContext : DbContext
             .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Board>()
+            .Property(x => x.Status)
+            .HasConversion<string>();
+
+        modelBuilder.Entity<Board>()
             .HasOne(b => b.CurrentMatch)
             .WithMany()
             .HasForeignKey(b => b.CurrentMatchId)
@@ -69,6 +81,10 @@ public class ApplicationDbContext : DbContext
             .WithMany(a => a.Events)
             .HasForeignKey(ae => ae.ArenaId)
             .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<ArenaEvent>()
+            .Property(x => x.EventType)
+            .HasConversion<string>();
 
         // Match Configuration
         modelBuilder.Entity<Match>()
@@ -76,6 +92,10 @@ public class ApplicationDbContext : DbContext
             .WithMany(a => a.Matches)
             .HasForeignKey(m => m.ArenaId)
             .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<Match>()
+            .Property(x => x.Status)
+            .HasConversion<string>();
 
         modelBuilder.Entity<Match>()
             .HasOne(m => m.Board)

@@ -85,7 +85,13 @@ namespace ArenaOtbApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("ActorPlayerId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("ArenaId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("BoardId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
@@ -96,12 +102,21 @@ namespace ArenaOtbApi.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("Metadata")
+                    b.Property<Guid?>("MatchId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("MetadataJson")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ActorPlayerId");
+
                     b.HasIndex("ArenaId");
+
+                    b.HasIndex("BoardId");
+
+                    b.HasIndex("MatchId");
 
                     b.ToTable("ArenaEvents");
                 });
@@ -180,6 +195,9 @@ namespace ArenaOtbApi.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("State")
+                        .HasColumnType("int");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -333,9 +351,8 @@ namespace ArenaOtbApi.Migrations
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -359,13 +376,31 @@ namespace ArenaOtbApi.Migrations
 
             modelBuilder.Entity("ArenaOtbApi.Models.ArenaEvent", b =>
                 {
+                    b.HasOne("ArenaOtbApi.Models.ArenaPlayer", "ActorPlayer")
+                        .WithMany()
+                        .HasForeignKey("ActorPlayerId");
+
                     b.HasOne("ArenaOtbApi.Models.Arena", "Arena")
                         .WithMany("Events")
                         .HasForeignKey("ArenaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ArenaOtbApi.Models.Board", "Board")
+                        .WithMany()
+                        .HasForeignKey("BoardId");
+
+                    b.HasOne("ArenaOtbApi.Models.Match", "Match")
+                        .WithMany()
+                        .HasForeignKey("MatchId");
+
+                    b.Navigation("ActorPlayer");
+
                     b.Navigation("Arena");
+
+                    b.Navigation("Board");
+
+                    b.Navigation("Match");
                 });
 
             modelBuilder.Entity("ArenaOtbApi.Models.ArenaPlayer", b =>

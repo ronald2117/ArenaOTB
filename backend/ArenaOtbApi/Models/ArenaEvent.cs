@@ -5,18 +5,25 @@ namespace ArenaOtbApi.Models;
 public class ArenaEvent
 {
     [Key]
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid Id { get; set; }
 
     public Guid ArenaId { get; set; }
-
-    [ForeignKey(nameof(ArenaId))]
     public Arena Arena { get; set; } = default!;
-
+    
     [Required]
     [MaxLength(50)]
-    public string EventType { get; set; } = default!;
+    public ArenaEventType EventType { get; set; } = default!;
 
-    public string? Metadata { get; set; }
+    public Guid? ActorPlayerId { get; set; }
+    public ArenaPlayer? ActorPlayer { get; set; }
+
+    public Guid? MatchId { get; set; }
+    public Match? Match { get; set; }
+
+    public Guid? BoardId { get; set; }
+    public Board? Board { get; set; }
+
+    public string? MetadataJson { get; set; }
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }

@@ -28,7 +28,7 @@ public class AuthController : ControllerBase
     [HttpPost("guest")]
     public async Task<IActionResult> GuestLogin()
     {
-        var guestUser = new User { Role = "guest" };
+        var guestUser = new User { Role = UserRole.Guest };
         _context.Users.Add(guestUser);
         await _context.SaveChangesAsync();
 
@@ -47,7 +47,7 @@ public class AuthController : ControllerBase
         {
             Email = dto.Email,
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
-            Role = "user"
+            Role = UserRole.User
         };
 
         _context.Users.Add(user);
@@ -91,7 +91,7 @@ public class AuthController : ControllerBase
                 {
                     Email = payload.Email,
                     GoogleId = payload.Subject,
-                    Role = "user"
+                    Role = UserRole.User
                 };
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync();

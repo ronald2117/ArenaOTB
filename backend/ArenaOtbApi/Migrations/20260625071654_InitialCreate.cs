@@ -6,37 +6,27 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ArenaOtbApi.Migrations
 {
     /// <inheritdoc />
-    public partial class AddRemainingModels : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(
-                name: "GoogleId",
-                table: "Users",
-                type: "nvarchar(255)",
-                maxLength: 255,
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)",
-                oldNullable: true);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Email",
-                table: "Users",
-                type: "nvarchar(255)",
-                maxLength: 255,
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(450)",
-                oldNullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "DisplayName",
-                table: "Users",
-                type: "nvarchar(100)",
-                maxLength: 100,
-                nullable: true);
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DisplayName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    GoogleId = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Role = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Arenas",
@@ -73,7 +63,10 @@ namespace ArenaOtbApi.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ArenaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     EventType = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Metadata = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ActorPlayerId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    MatchId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    BoardId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    MetadataJson = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -121,6 +114,7 @@ namespace ArenaOtbApi.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    State = table.Column<int>(type: "int", nullable: false),
                     ArenaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Label = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Status = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
@@ -241,9 +235,24 @@ namespace ArenaOtbApi.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_ArenaEvents_ActorPlayerId",
+                table: "ArenaEvents",
+                column: "ActorPlayerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ArenaEvents_ArenaId",
                 table: "ArenaEvents",
                 column: "ArenaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ArenaEvents_BoardId",
+                table: "ArenaEvents",
+                column: "BoardId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ArenaEvents_MatchId",
+                table: "ArenaEvents",
+                column: "MatchId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ArenaPlayers_ArenaId",
@@ -316,6 +325,34 @@ namespace ArenaOtbApi.Migrations
                 table: "MatchResults",
                 column: "SubmittedByPlayerId");
 
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Email",
+                table: "Users",
+                column: "Email",
+                unique: true,
+                filter: "[Email] IS NOT NULL");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_ArenaEvents_ArenaPlayers_ActorPlayerId",
+                table: "ArenaEvents",
+                column: "ActorPlayerId",
+                principalTable: "ArenaPlayers",
+                principalColumn: "Id");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_ArenaEvents_Boards_BoardId",
+                table: "ArenaEvents",
+                column: "BoardId",
+                principalTable: "Boards",
+                principalColumn: "Id");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_ArenaEvents_Matches_MatchId",
+                table: "ArenaEvents",
+                column: "MatchId",
+                principalTable: "Matches",
+                principalColumn: "Id");
+
             migrationBuilder.AddForeignKey(
                 name: "FK_ArenaPlayers_Matches_CurrentMatchId",
                 table: "ArenaPlayers",
@@ -337,8 +374,12 @@ namespace ArenaOtbApi.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_ArenaPlayers_Arenas_ArenaId",
-                table: "ArenaPlayers");
+                name: "FK_Matches_ArenaPlayers_BlackPlayerId",
+                table: "Matches");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Matches_ArenaPlayers_WhitePlayerId",
+                table: "Matches");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Boards_Arenas_ArenaId",
@@ -349,12 +390,8 @@ namespace ArenaOtbApi.Migrations
                 table: "Matches");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_ArenaPlayers_Matches_CurrentMatchId",
-                table: "ArenaPlayers");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Boards_Matches_CurrentMatchId",
-                table: "Boards");
+                name: "FK_Matches_Boards_BoardId",
+                table: "Matches");
 
             migrationBuilder.DropTable(
                 name: "ArenaEvents");
@@ -366,40 +403,19 @@ namespace ArenaOtbApi.Migrations
                 name: "MatchResults");
 
             migrationBuilder.DropTable(
+                name: "ArenaPlayers");
+
+            migrationBuilder.DropTable(
                 name: "Arenas");
 
             migrationBuilder.DropTable(
-                name: "Matches");
-
-            migrationBuilder.DropTable(
-                name: "ArenaPlayers");
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Boards");
 
-            migrationBuilder.DropColumn(
-                name: "DisplayName",
-                table: "Users");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "GoogleId",
-                table: "Users",
-                type: "nvarchar(max)",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(255)",
-                oldMaxLength: 255,
-                oldNullable: true);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Email",
-                table: "Users",
-                type: "nvarchar(450)",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(255)",
-                oldMaxLength: 255,
-                oldNullable: true);
+            migrationBuilder.DropTable(
+                name: "Matches");
         }
     }
 }

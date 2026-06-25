@@ -29,7 +29,7 @@ public class Arena
 
     [Required]
     [MaxLength(20)]
-    public string Status { get; set; } = "WAITING";
+    public ArenaStatus Status { get; set; } = ArenaStatus.Waiting;
 
     public Guid OrganizerId { get; set; }
 

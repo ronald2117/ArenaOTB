@@ -20,7 +20,7 @@ public class User
     public string? GoogleId { get; set; }
 
     [Required]
-    public string Role { get; set; } = "guest"; // "guest", "user", "admin"
+    public UserRole Role { get; set; } = UserRole.Guest; 
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 

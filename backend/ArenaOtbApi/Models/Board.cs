@@ -8,6 +8,9 @@ public class Board
     [Key]
     public Guid Id { get; set; } = Guid.NewGuid();
 
+    [Required]
+    public BoardState State { get; set; } = BoardState.Free;
+
     public Guid ArenaId { get; set; }
 
     [ForeignKey(nameof(ArenaId))]
